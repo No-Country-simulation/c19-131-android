@@ -1,11 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
+  const navigation = useNavigation();
   return (
-    <View>
+    <SafeAreaView>
       <Text>RegisterScreen</Text>
-    </View>
+
+      <Pressable onPress={() => navigation.navigate('MainStack')}>
+        <Text>Crear cuenta</Text>
+      </Pressable>
+    </SafeAreaView>
   )
 }
 
