@@ -1,3 +1,6 @@
+require('dotenv').config(); // Cargar variables de entorno al principio
+console.log('MONGO_URI:', process.env.MONGO_URI); // Agrega esta línea para verificar el valor
+
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;

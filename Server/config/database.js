@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
+require('dotenv').config(); // Cargar variables de entorno
 
-mongoose.connect('mongodb+srv://user_ecommerce_movil:SrMYSnIvd3vdRr5D@dbmovilecommerce.7w85abo.mongodb.net/?retryWrites=true&w=majority&appName=dbMovilEcommerce', {
+const mongoUri = process.env.MONGO_URI;
+
+if (!mongoUri) {
+    console.error('Falta la variable de entorno MONGO_URI');
+    process.exit(1); // Termina el proceso si falta la variable
+}
+
+mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {

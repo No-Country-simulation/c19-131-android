@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 exports.registerUser = async (req, res) => {
     const { email, password } = req.body;
@@ -44,8 +45,14 @@ exports.loginUser = async (req, res) => {
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
+        const payload = {
+            userId: user._id,
+            email: user.email
+        };
 
-        res.status(200).json({ message: 'Inicio de sesión exitoso' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        res.status(200).json({ message: 'Inicio de sesión exitoso', token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al iniciar sesión' });
