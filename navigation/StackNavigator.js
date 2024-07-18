@@ -8,6 +8,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ListScreen from '../screens/ListScreen';
+import DetailScreen from '../screens/DetailScreen';
 import { NavigationContainer } from "@react-navigation/native";
 const StackNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,6 +46,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Lista Productos"
           component={ListScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Detalle Producto"
+          component={DetailScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

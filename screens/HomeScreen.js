@@ -1,20 +1,35 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  return (
-    <View>
-      <Text>HomeScreen</Text>
+  const categories = [
+    { id: 1, name: "Sala" },
+    { id: 2, name: "Dormitorio" },
+    { id: 3, name: "Cocina" },
+    { id: 4, name: "Exteriores" }
+  ];
 
-      <Pressable onPress={() => navigation.navigate('Lista Productos')}>
-        <Text>Lista productos</Text>
+  const CategoryItem = ({ id, name }) => {
+    return (
+      <Pressable style={{ marginVertical: 5 }} onPress={() => navigation.navigate('Lista Productos', { categoryId: id })}>
+        <Text>{name}</Text>
       </Pressable>
-    </View>
-  )
-}
+    );
+  };
 
-export default HomeScreen
+  return (
+    <SafeAreaView>
+      <ScrollView style={{ marginHorizontal: 20, marginVertical: 10 }}>
+        {categories.map(item => (
+          <CategoryItem key={item.id} id={item.id} name={item.name} />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
-const styles = StyleSheet.create({})
+export default HomeScreen;
+
+const styles = StyleSheet.create({});
