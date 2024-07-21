@@ -10,6 +10,7 @@ import RegisterScreen from "../screens/RegisterScreen";
 import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
 import { NavigationContainer } from "@react-navigation/native";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 const StackNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const Stack = createNativeStackNavigator();
@@ -17,12 +18,31 @@ const StackNavigator = () => {
 
   function BottomTabs() {
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Favoritos" component={FavouritesScreen} />
-        <Tab.Screen name="Perfil" component={ProfileScreen} />
-      </Tab.Navigator>
-    );
+      <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Productos') {
+            iconName = focused ? 'home-sharp' : 'home-outline';
+            return <Ionicons name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Favoritos') {
+            iconName = focused ? 'bookmark' : 'bookmark-o';
+            return <FontAwesome name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Perfil') {
+            iconName = focused ? 'user-circle' : 'user-circle-o';
+            return <FontAwesome name={iconName} size={size} color={color} />;
+          }
+        },
+        tabBarActiveTintColor: 'black',
+        tabBarInactiveTintColor: 'black',
+      })}
+    >
+      <Tab.Screen name="Productos" component={HomeScreen} />
+      <Tab.Screen name="Favoritos" component={FavouritesScreen} />
+      <Tab.Screen name="Perfil" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
   }
 
   const AuthStack = () => {
