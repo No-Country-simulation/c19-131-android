@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -9,14 +9,20 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
-import { NavigationContainer } from "@react-navigation/native";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import CartScreen from '../screens/CartScreen'
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+
+
+
 const StackNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
+  
 
   function BottomTabs() {
+    
     return (
       <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -36,13 +42,71 @@ const StackNavigator = () => {
         },
         tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'black',
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('Carrito')}>
+            <MaterialCommunityIcons name="cart-outline" size={30} color="black" style={{ marginRight: 35 }} />         
+          </TouchableOpacity>
+        ),
       })}
     >
-      <Tab.Screen name="Productos" component={HomeScreen} />
+      <Tab.Screen name="Productos" component={ProductStack} options={{ headerShown: false }} />
       <Tab.Screen name="Favoritos" component={FavouritesScreen} />
       <Tab.Screen name="Perfil" component={ProfileScreen} />
     </Tab.Navigator>
   );
+  }
+
+  function goToCart() {
+    const navigation = useNavigation();
+    return (
+      <TouchableOpacity onPress={() => navigation.navigate("Carrito")}>
+        <MaterialCommunityIcons
+          name="cart-outline"
+          size={30}
+          color="black"
+          style={{ marginRight: 35 }}
+        />
+      </TouchableOpacity>
+    );
+  }
+
+  function ProductStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            headerShown: true,
+            title: "Productos",
+            headerRight: () => goToCart(),
+          }}
+        />
+        <Stack.Screen
+          name="Lista Productos"
+          component={ListScreen}
+          options={{
+            headerShown: true,
+            title: "Lista de Productos",
+            headerRight: () => goToCart(),
+          }}
+        />
+        <Stack.Screen
+          name="Detalle Producto"
+          component={DetailScreen}
+          options={{
+            headerShown: true,
+            title: "Detalle",
+            headerRight: () => goToCart(),
+          }}
+        />
+        <Stack.Screen
+          name="Carrito"
+          component={CartScreen}
+          options={{ headerShown: true }}
+        />
+      </Stack.Navigator>
+    );
   }
 
   const AuthStack = () => {
@@ -61,16 +125,6 @@ const StackNavigator = () => {
         <Stack.Screen
           name="MainStack"
           component={MainStack}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Lista Productos"
-          component={ListScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Detalle Producto"
-          component={DetailScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

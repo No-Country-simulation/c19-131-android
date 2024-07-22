@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ProfileScreen = () => {
   return (
-    <View>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <Text>ProfileScreen</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 

@@ -4,11 +4,12 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Button, Card, FAB } from "react-native-paper";
+import { Card, FAB } from "react-native-paper";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -46,10 +47,10 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
+    <View style={{ backgroundColor: "white", flex: 1 }}>
       <ScrollView
         horizontal
-        style={{ marginHorizontal: 20, marginVertical: 30 }}
+        style={{ marginVertical: 20 }}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -57,13 +58,13 @@ const HomeScreen = () => {
           <CategoryItem key={item.id} id={item.id} iconName={item.iconName} />
         ))}
       </ScrollView>
-      <Text style={{ fontSize:30, marginHorizontal: 30}}>Lorem</Text>
+      <Text style={{ fontSize: 30, marginHorizontal: 30 }}>Lorem</Text>
       <Card
         style={{
           padding: 25,
           marginHorizontal: 30,
-          height: 450,
-          marginBottom: 90,
+          height: 400,
+          marginBottom: 60,
           position: "relative",
         }}
       >
@@ -75,18 +76,22 @@ const HomeScreen = () => {
           <FAB
             icon="plus"
             style={{
-              backgroundColor: "#6200ea",
-              borderRadius: 50,
               position: "absolute",
-              bottom: -40,
+              bottom: -3,
               right: -20,
+              backgroundColor: "#6200ea",
+              borderRadius: 15,
+              height: 30,
+              width: 30,
+              justifyContent: "center",
+              alignItems: "center",
             }}
             color="white"
             onPress={() => console.log("Pressed")}
           />
         </Card.Actions>
       </Card>
-    </SafeAreaView>
+    </View>
   );
 };
 

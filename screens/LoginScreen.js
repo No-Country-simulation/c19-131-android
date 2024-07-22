@@ -11,7 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { baseUrl } from "../utils/constants";
 import { Button, TextInput } from "react-native-paper";
-import GoogleIcon from '../assets/google.png'
 
 const LoginScreen = () => {
   const navigation = useNavigation();
