@@ -32,7 +32,7 @@ const StackNavigator = () => {
           if (route.name === 'Productos') {
             iconName = focused ? 'home-sharp' : 'home-outline';
             return <Ionicons name={iconName} size={size} color={color} />;
-          } else if (route.name === 'Favoritos') {
+          } else if (route.name === 'Guardados') {
             iconName = focused ? 'bookmark' : 'bookmark-o';
             return <FontAwesome name={iconName} size={size} color={color} />;
           } else if (route.name === 'Perfil') {
@@ -42,15 +42,10 @@ const StackNavigator = () => {
         },
         tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'black',
-        headerRight: () => (
-          <TouchableOpacity onPress={() => navigation.navigate('Carrito')}>
-            <MaterialCommunityIcons name="cart-outline" size={30} color="black" style={{ marginRight: 35 }} />         
-          </TouchableOpacity>
-        ),
       })}
     >
       <Tab.Screen name="Productos" component={ProductStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Favoritos" component={FavouritesScreen} />
+      <Tab.Screen name="Guardados" component={FavouriteStack} options={{ headerShown: false }} />
       <Tab.Screen name="Perfil" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -107,6 +102,36 @@ const StackNavigator = () => {
         />
       </Stack.Navigator>
     );
+  }
+
+  function FavouriteStack() {
+    return(
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Favoritos"
+          component={FavouritesScreen}
+          options={{
+            headerShown: true,
+            title: "Guardados",
+            headerRight: () => goToCart(),
+          }}
+        />
+        <Stack.Screen
+          name="Detalle Producto"
+          component={DetailScreen}
+          options={{
+            headerShown: true,
+            title: "Detalle",
+            headerRight: () => goToCart(),
+          }}
+        />
+        <Stack.Screen
+          name="Carrito"
+          component={CartScreen}
+          options={{ headerShown: true }}
+        />
+      </Stack.Navigator>
+    )
   }
 
   const AuthStack = () => {
