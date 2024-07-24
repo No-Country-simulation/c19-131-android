@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -11,7 +11,12 @@ import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
 import CartScreen from '../screens/CartScreen'
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import ShopsScreen from "../screens/ShopsScreen";
+import WalletScreen from "../screens/WalletScreen";
+import ConfigScreen from "../screens/ConfigScreen";
+import AddPaymentMethod from "../screens/AddPaymentMethod";
 
 
 
@@ -19,7 +24,7 @@ const StackNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
-  
+  const Drawer = createDrawerNavigator();  
 
   function BottomTabs() {
     
@@ -35,7 +40,7 @@ const StackNavigator = () => {
           } else if (route.name === 'Guardados') {
             iconName = focused ? 'bookmark' : 'bookmark-o';
             return <FontAwesome name={iconName} size={size} color={color} />;
-          } else if (route.name === 'Perfil') {
+          } else if (route.name === 'PerfilTab') {
             iconName = focused ? 'user-circle' : 'user-circle-o';
             return <FontAwesome name={iconName} size={size} color={color} />;
           }
@@ -46,7 +51,7 @@ const StackNavigator = () => {
     >
       <Tab.Screen name="Productos" component={ProductStack} options={{ headerShown: false }} />
       <Tab.Screen name="Guardados" component={FavouriteStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Perfil" component={ProfileScreen} options={{headerShown: true, headerRight: () => showDrawerNavigation()}} />
+      <Tab.Screen name="PerfilTab" component={ShowDrawerNavigation} options={{headerShown: false, title: "Perfil"}} />
     </Tab.Navigator>
   );
   }
@@ -65,18 +70,108 @@ const StackNavigator = () => {
     );
   }
 
-  function showDrawerNavigation() {
+  function goToAddPaymentMethod() {
+    const navigation = useNavigation();
     return (
-      <TouchableOpacity onPress={()=>{console.log("pressed")}}>
+      <TouchableOpacity onPress={() => navigation.navigate("AddPaymentMethod")}>
         <MaterialCommunityIcons
-          name="menu"
+          name="wallet-plus-outline"
           size={30}
           color="black"
           style={{ marginRight: 35 }}
         />
       </TouchableOpacity>
     );
+  }
 
+  function ShowDrawerNavigation() {
+    return (
+      <Drawer.Navigator
+        initialRouteName="Perfil"
+        drawerContent={(props) => {
+          return (
+            <DrawerContentScrollView {...props}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  marginVertical: 20,
+                  marginHorizontal: 18,
+                }}
+              >
+                Perfil
+              </Text>
+              <DrawerItem
+                label={"Datos personales"}
+                onPress={() => props.navigation.navigate("Perfil")}
+                icon={() => (
+                  <FontAwesome6
+                    name="user"
+                    color={'black'}
+                    size={25}
+                  />
+                )}
+                labelStyle={{color:'black', fontSize: 15}}
+              />
+              <DrawerItem
+                label={"Mis Compras"}
+                onPress={() => props.navigation.navigate("Shops")}
+                icon={() => (
+                  <MaterialCommunityIcons
+                    name="shopping-outline"
+                    color={'black'}
+                    size={25}
+                  />
+                )}
+                labelStyle={{color:'black', fontSize: 15}}
+              />
+              <DrawerItem
+                label={"Mi billetera"}
+                onPress={() => props.navigation.navigate("Wallet")}
+                icon={() => (
+                  <Ionicons
+                    name="wallet-outline"
+                    color={'black'}
+                    size={25}
+                  />
+                )}
+                labelStyle={{color:'black', fontSize: 15}}
+              />
+              <DrawerItem
+                label={"Configuración"}
+                onPress={() => props.navigation.navigate("Config")}
+                icon={() => (
+                  <SimpleLineIcons
+                    name="settings"
+                    color={'black'}
+                    size={25}
+                  />
+                )}
+                labelStyle={{color:'black', fontSize: 15}}
+              />
+              <DrawerItem
+                label={"Cerrar sesión"}
+                onPress={() => console.log("Cerrar sesion pressed")}
+                icon={() => (
+                  <MaterialIcons
+                    name="logout"
+                    color={'black'}
+                    size={25}
+                  />
+                )}
+                labelStyle={{color:'black', fontSize: 15}}
+              />
+            </DrawerContentScrollView>
+          );
+        }}
+      >
+        <Drawer.Screen name="Perfil" component={ProfileScreen} />
+        <Drawer.Screen name="Shops" component={ShopsScreen} />
+        <Drawer.Screen name="Wallet" component={WalletScreen} options={{headerRight: () => goToAddPaymentMethod()}} />
+        <Drawer.Screen name="Config" component={ConfigScreen} />
+        <Drawer.Screen name="AddPaymentMethod" component={AddPaymentMethod} />
+      </Drawer.Navigator>
+    );
   }
 
   function ProductStack() {
