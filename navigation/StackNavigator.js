@@ -46,7 +46,7 @@ const StackNavigator = () => {
     >
       <Tab.Screen name="Productos" component={ProductStack} options={{ headerShown: false }} />
       <Tab.Screen name="Guardados" component={FavouriteStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Perfil" component={ProfileScreen} />
+      <Tab.Screen name="Perfil" component={ProfileScreen} options={{headerShown: true, headerRight: () => showDrawerNavigation()}} />
     </Tab.Navigator>
   );
   }
@@ -63,6 +63,20 @@ const StackNavigator = () => {
         />
       </TouchableOpacity>
     );
+  }
+
+  function showDrawerNavigation() {
+    return (
+      <TouchableOpacity onPress={()=>{console.log("pressed")}}>
+        <MaterialCommunityIcons
+          name="menu"
+          size={30}
+          color="black"
+          style={{ marginRight: 35 }}
+        />
+      </TouchableOpacity>
+    );
+
   }
 
   function ProductStack() {

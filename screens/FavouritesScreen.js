@@ -17,9 +17,9 @@ const FavouritesScreen = () => {
     (product) => product.favourite === true
   );
 
-  const FavouriteItem = ({ name, subtitle, image }) => {
+  const FavouriteItem = ({ name, subtitle, image, description, price }) => {
     return (
-      <Pressable
+      <Pressable onPress={() => navigation.navigate("Detalle Producto", {name: name, subtitle: subtitle, image: image, description: description, price: price})}
         style={{
           marginHorizontal: 20,
           marginVertical: 10,
@@ -59,6 +59,8 @@ const FavouritesScreen = () => {
             name={item.name}
             subtitle={item.subtitle}
             image={item.image}
+            description={item.description}
+            price={item.price}
           />
         )}
       ></FlatList>

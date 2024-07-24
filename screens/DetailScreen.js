@@ -52,10 +52,11 @@ const DetailScreen = () => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            marginVertical: 10,
+            marginTop: 30,
+            marginBottom: 10
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>${price}</Text>
+          <Text style={{ fontSize: 30, fontWeight: "bold" }}>${price}</Text>
           <Button mode="contained">Agregar al carrito</Button>
         </View>
       </View>
