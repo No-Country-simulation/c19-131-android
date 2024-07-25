@@ -26,7 +26,7 @@ const FavouritesScreen = () => {
           flexDirection: "row",
           borderRadius: 10,
           backgroundColor: '#D1C4E9',
-          elevation: 10,
+          elevation: 2,
         }}
       >
         <View>

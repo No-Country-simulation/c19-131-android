@@ -30,7 +30,7 @@ const WalletScreen = () => {
           backgroundColor: "#D1C4E9",
           margin: 20,
           borderRadius: 10,
-          elevation: 10,
+          elevation: 2,
           padding: 15,
           flexDirection: "column",
         }}

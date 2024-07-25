@@ -22,7 +22,7 @@ const ListScreen = () => {
           width: "45%",
           height: 'auto',
           backgroundColor: '#D1C4E9',
-          elevation: 10
+          elevation: 2
         }}
         onPress={() => navigation.navigate("Detalle Producto", {name: name, subtitle: subtitle, image: image, description: description, price: price})}
       >
