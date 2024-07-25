@@ -83,6 +83,7 @@ const RegisterScreen = () => {
               secureTextEntry={true}
             />
           </View>
+          <Text style={{fontSize:12, marginLeft: 10, marginTop: 5}}>La contraseña debe tener entre 8 y 20 caracteres</Text>
 
           <Button mode="contained" style={{ marginTop: 50, marginBottom: 30 }} onPress={() => navigation.navigate('MainStack')}>
             Registrarse
