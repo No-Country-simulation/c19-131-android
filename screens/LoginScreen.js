@@ -112,7 +112,7 @@ const LoginScreen = () => {
           </Pressable>
         </View>
 
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -147,7 +147,7 @@ const LoginScreen = () => {
           >
             Ingresa con Google
           </Button>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
