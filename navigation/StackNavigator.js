@@ -166,10 +166,10 @@ const StackNavigator = () => {
         }}
       >
         <Drawer.Screen name="Perfil" component={ProfileScreen} />
-        <Drawer.Screen name="Shops" component={ShopsScreen} />
-        <Drawer.Screen name="Wallet" component={WalletScreen} options={{headerRight: () => goToAddPaymentMethod()}} />
-        <Drawer.Screen name="Config" component={ConfigScreen} />
-        <Drawer.Screen name="AddPaymentMethod" component={AddPaymentMethod} />
+        <Drawer.Screen name="Shops" component={ShopsScreen} options={{title: "Mis Compras"}} />
+        <Drawer.Screen name="Wallet" component={WalletScreen} options={{headerRight: () => goToAddPaymentMethod(), title: "Mi Billetera"}} />
+        <Drawer.Screen name="Config" component={ConfigScreen} options={{title: "Configuración"}} />
+        <Drawer.Screen name="AddPaymentMethod" component={AddPaymentMethod} options={{title: "Agregar tarjeta"}} />
       </Drawer.Navigator>
     );
   }
