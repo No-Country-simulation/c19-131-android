@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 
 /**
  * @openapi
- * /api/auth/register:
+ * /auth/register:
  *   post:
  *     summary: Registra un nuevo usuario
  *     description: Crea una nueva cuenta de usuario.
@@ -31,7 +31,7 @@ router.post('/register', authController.registerUser);
 
 /**
  * @openapi
- * /api/auth/login:
+ * /auth/login:
  *   post:
  *     summary: Inicia sesión
  *     description: Inicia sesión con un email y una contraseña.
@@ -58,7 +58,7 @@ router.post('/login', authController.loginUser);
 
 /**
  * @openapi
- * /api/auth/logout:
+ * /auth/logout:
  *   post:
  *     summary: Cierra sesión
  *     description: Cierra la sesión del usuario actual.

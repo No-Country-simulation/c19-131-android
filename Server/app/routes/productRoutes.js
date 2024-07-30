@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 
+// Crear un nuevo producto
+router.post('/', productController.createProduct);
+
 /**
  * @openapi
- * /api/product:
+ * /product:
  *   get:
  *     summary: Obtiene todos los productos
  *     description: Obtiene una lista de todos los productos disponibles.
@@ -18,7 +21,7 @@ router.get('/', productController.getAllProducts);
 
 /**
  * @openapi
- * /api/product/category/{categoryName}:
+ * /product/category/{categoryName}:
  *   get:
  *     summary: Obtiene productos por categoría
  *     description: Obtiene una lista de productos filtrados por la categoría proporcionada.
@@ -40,7 +43,7 @@ router.get('/category/:categoryName', productController.getProductsByCategory);
 
 /**
  * @openapi
- * /api/product/{productId}:
+ * /product/{productId}:
  *   get:
  *     summary: Obtiene un producto por ID
  *     description: Obtiene la información de un producto específico por su ID.
@@ -59,5 +62,8 @@ router.get('/category/:categoryName', productController.getProductsByCategory);
  *         description: Producto no encontrado
  */
 router.get('/:productId', productController.getProductById);
+
+// Obtener productos por categoría (opcional, si se necesita una ruta separada)
+router.get('/category/:id', productController.getCategoryProducts);
 
 module.exports = router;

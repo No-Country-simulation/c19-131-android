@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /api/category:
+ * /categories:
  *   post:
  *     summary: Crea una categoría
  *     description: Crea una nueva categoría de producto.
@@ -30,11 +30,11 @@ const router = express.Router();
  *       400:
  *         description: Error en la solicitud
  */
-router.post('/', passport.authenticate('jwt', { session: false }), categoryController.createCategory);
+router.post('/', categoryController.createCategory);
 
 /**
  * @openapi
- * /api/category:
+ * /categories:
  *   get:
  *     summary: Obtiene todas las categorías
  *     description: Obtiene una lista de todas las categorías de producto.
@@ -46,11 +46,11 @@ router.post('/', passport.authenticate('jwt', { session: false }), categoryContr
  *       404:
  *         description: No se encontraron categorías
  */
-router.get('/', passport.authenticate('jwt', { session: false }), categoryController.getCategories);
+router.get('/', categoryController.getCategories);
 
 /**
  * @openapi
- * /api/category/{id}:
+ * /categories/{id}:
  *   get:
  *     summary: Obtiene una categoría por ID
  *     description: Obtiene la categoría de producto asociada al ID proporcionado.
@@ -70,11 +70,11 @@ router.get('/', passport.authenticate('jwt', { session: false }), categoryContro
  *       404:
  *         description: Categoría no encontrada
  */
-router.get('/:id', passport.authenticate('jwt', { session: false }), categoryController.getCategoryById);
+router.get('/:id', categoryController.getCategoryById);
 
 /**
  * @openapi
- * /api/category/{id}:
+ * /categories/{id}:
  *   put:
  *     summary: Actualiza una categoría
  *     description: Actualiza la información de una categoría de producto existente.
@@ -111,7 +111,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), categoryCon
 
 /**
  * @openapi
- * /api/category/{id}:
+ * /categories/{id}:
  *   delete:
  *     summary: Elimina una categoría
  *     description: Elimina una categoría de producto existente.

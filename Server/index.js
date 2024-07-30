@@ -1,32 +1,34 @@
-require('dotenv').config(); // Cargar variables de entorno al principio
-
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require('./config/database');
-const passport = require('passport'); // Asegúrate de que passport esté importado
-const passportConfig = require('./config/passport-config');
+const passport = require('./config/passport-config'); // Asegúrate de que esta ruta es correcta
+const swaggerDocs = require('./config/swagger');
 
-const swaggerDocs = require('./config/swagger'); // Importa la configuración de Swagger
-// Routes
-const authRoutes = require('./app/routes/authRoutes');
-
-console.log('MONGO_URI:', process.env.MONGO_URI); // Verificar el valor de MONGO_URI
-
-
-// Importar y configurar Passport
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(passport.initialize()); // Inicializa Passport
+app.use(passport.initialize());
+console.log('Passport initialized'); // Mensaje de depuración
 
 // Configura Swagger
 swaggerDocs(app);
+console.log('Swagger docs configured'); // Mensaje de depuración
 
+// Rutas
+const authRoutes = require('./app/routes/authRoutes');
+const cartRoutes = require('./app/routes/cartRoutes');
+const categoryRoutes = require('./app/routes/categoryRoutes');
+const productRoutes = require('./app/routes/productRoutes');
 
+// Montar rutas en la aplicación
 app.use('/api/auth', authRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+console.log('Routes mounted'); // Mensaje de depuración
 
-// Start server
-const server = app.listen(PORT, '0.0.0.0', () => {
+// Iniciar servidor
+app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });

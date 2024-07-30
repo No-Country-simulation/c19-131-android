@@ -60,5 +60,13 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.logoutUser = (req, res) => {
-    res.status(200).json({ message: 'Sesión cerrada correctamente' });
+    // Suponiendo que el token está en el encabezado Authorization
+    const token = req.headers['authorization']?.split(' ')[1]; // Extraer token del encabezado Authorization
+
+    if (token) {
+        // Aquí podrías añadir lógica para manejar tokens revocados si estás usando esa técnica
+        res.status(200).json({ message: 'Logout exitoso' });
+    } else {
+        res.status(400).json({ message: 'No se proporcionó token' });
+    }
 };
