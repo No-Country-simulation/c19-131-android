@@ -1,17 +1,29 @@
 require('dotenv').config(); // Cargar variables de entorno al principio
-console.log('MONGO_URI:', process.env.MONGO_URI); // Agrega esta línea para verificar el valor
 
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require('./config/database');
+const passport = require('passport'); // Asegúrate de que passport esté importado
+const passportConfig = require('./config/passport-config');
 
+const swaggerDocs = require('./config/swagger'); // Importa la configuración de Swagger
+// Routes
+const authRoutes = require('./app/routes/authRoutes');
+
+console.log('MONGO_URI:', process.env.MONGO_URI); // Verificar el valor de MONGO_URI
+
+
+// Importar y configurar Passport
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize()); // Inicializa Passport
 
-// Routes
-const authRoutes = require('./app/routes/authRoutes');
+// Configura Swagger
+swaggerDocs(app);
+
+
 app.use('/api/auth', authRoutes);
 
 // Start server

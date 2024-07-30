@@ -1,31 +1,28 @@
-// Server/config/passport-config.js
-
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('../app/models/user');
+const { Strategy, ExtractJwt } = require('passport-jwt');
+const User = require('../app/models/User'); // Verifica la ruta correcta
+const jwtSecret = process.env.JWT_SECRET; // Asegúrate de que esta variable esté definida en tu .env
 
-passport.use(new LocalStrategy({
-    usernameField: 'email', 
-    passwordField: 'password'
-}, async (email, password, done) => {
+if (!jwtSecret) {
+    console.error('Falta la variable de entorno JWT_SECRET');
+    process.exit(1);
+}
+
+const jwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: jwtSecret
+};
+
+passport.use(new Strategy(jwtOptions, async (jwtPayload, done) => {
     try {
-
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return done(null, false, { message: 'Usuario no encontrado' });
+        const user = await User.findById(jwtPayload.id);
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
         }
-
-        const isMatch = await comparePasswords(password, user.password);
-
-        if (!isMatch) {
-            return done(null, false, { message: 'Contraseña incorrecta' });
-        }
-
-        return done(null, user);
-
     } catch (error) {
-        return done(error);
+        return done(error, false);
     }
 }));
 
@@ -33,8 +30,13 @@ passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-        done(err, user);
-    });
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch (error) {
+        done(error, null);
+    }
 });
+
+module.exports = passport;
