@@ -1,20 +1,34 @@
-require('dotenv').config(); // Cargar variables de entorno al principio
-console.log('MONGO_URI:', process.env.MONGO_URI); // Agrega esta línea para verificar el valor
-
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require('./config/database');
+const passport = require('./config/passport-config'); // Asegúrate de que esta ruta es correcta
+const swaggerDocs = require('./config/swagger');
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
+console.log('Passport initialized'); // Mensaje de depuración
 
-// Routes
+// Configura Swagger
+swaggerDocs(app);
+console.log('Swagger docs configured'); // Mensaje de depuración
+
+// Rutas
 const authRoutes = require('./app/routes/authRoutes');
-app.use('/api/auth', authRoutes);
+const cartRoutes = require('./app/routes/cartRoutes');
+const categoryRoutes = require('./app/routes/categoryRoutes');
+const productRoutes = require('./app/routes/productRoutes');
 
-// Start server
-const server = app.listen(PORT, '0.0.0.0', () => {
+// Montar rutas en la aplicación
+app.use('/api/auth', authRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+console.log('Routes mounted'); // Mensaje de depuración
+
+// Iniciar servidor
+app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
