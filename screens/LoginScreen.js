@@ -20,7 +20,7 @@ const LoginScreen = () => {
   function handleOnTapLoginButton() {
     const userData = { email: email, password: password };
     axios
-      .post(baseUrl + "/login", userData)
+      .post(baseUrl + "/auth/login", userData)
       .then((res) => {
         console.log(res.data);
         if (res.data.status === 200) {
