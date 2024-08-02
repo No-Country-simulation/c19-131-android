@@ -81,7 +81,7 @@ const LoginScreen = () => {
         <View style={{ alignItems: "center" }}>
           <Button
             mode="contained"
-            onPress={() => navigation.navigate("MainStack")}
+            onPress={() => handleOnTapLoginButton()}
             style={{ marginTop: 20, width: "70%" }}
           >
             Iniciar Sesion
