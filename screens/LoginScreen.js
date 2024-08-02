@@ -24,8 +24,8 @@ const LoginScreen = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.status === 200) {
+          localStorage.setItem("token", response.data.token)
           navigation.navigate("MainStack");
-          console.log("Ingreso exitoso");
           setEmail("");
           setPassword("");
         }
@@ -81,7 +81,7 @@ const LoginScreen = () => {
         <View style={{ alignItems: "center" }}>
           <Button
             mode="contained"
-            onPress={()=> navigation.navigate("MainStack")}
+            onPress={() => navigation.navigate("MainStack")}
             style={{ marginTop: 20, width: "70%" }}
           >
             Iniciar Sesion

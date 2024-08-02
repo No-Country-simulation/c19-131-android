@@ -1,4 +1,7 @@
-export const baseUrl = "https://yourdomain.com/api";
+export const baseUrl = "https://c19-131-android.onrender.com/api";
+
+const UrlApiProducts = "https://c19-131-android.onrender.com/api/categories"
+
 
 export const allProducts = [
   {
